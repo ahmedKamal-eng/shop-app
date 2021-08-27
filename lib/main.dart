@@ -1,29 +1,73 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shop_app/login/shop_login.dart';
 import 'package:shop_app/on_boarding/on_boarding_screen.dart';
+import 'package:shop_app/shop_layout.dart';
+import 'package:shop_app/styles/themes.dart';
 
-void main() {
-  runApp(MyApp());
+import 'cubit/app_cubit.dart';
+import 'cubit/cubit.dart';
+import 'cubit/obServer.dart';
+import 'cubit/states.dart';
+import 'network/local/cache_helper.dart';
+import 'network/remote/dio_helper.dart';
+
+void main() async {
+  //we use this line when we use the async
+  //this line ensure all things in the main method is initialized
+  WidgetsFlutterBinding.ensureInitialized();
+
+  DioHelper.init();
+
+  Widget widget;
+
+  await CacheHelper.init();
+  bool onBoarding = CacheHelper.getData(key: 'onBoarding');
+  String token = CacheHelper.getData(key: 'token');
+
+  if (onBoarding != null) {
+    if (token != null)
+      widget = ShopLayout();
+    else
+      widget = ShopLoginScreen();
+  } else {
+    widget = OnBoardingScreen();
+  }
+
+  // to execute the observer
+  Bloc.observer = MyBlocObserver();
+
+  runApp(MyApp(onBoarding: onBoarding, startWidget: widget));
 }
 
 class MyApp extends StatelessWidget {
+  final bool onBoarding;
+  final Widget startWidget;
+  MyApp({this.onBoarding, this.startWidget});
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (BuildContext context) => AppCubit(),
+        ),
+        BlocProvider(create: (BuildContext context) => NewsCubit())
+      ],
+      child: BlocConsumer<AppCubit, NewsStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            themeMode: ThemeMode.light,
+            home: startWidget,
+          );
+        },
       ),
-      home: OnBoardingScreen(),
     );
   }
 }
