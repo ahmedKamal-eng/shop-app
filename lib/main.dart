@@ -2,9 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shop_app/login/shop_login.dart';
-import 'package:shop_app/on_boarding/on_boarding_screen.dart';
-import 'package:shop_app/shop_layout.dart';
+import 'package:shop_app/layout/login/shop_login.dart';
+import 'package:shop_app/layout/on_boarding/on_boarding_screen.dart';
+import 'package:shop_app/shop_app/cubit.dart';
+import 'package:shop_app/shop_app/shop_layout.dart';
 import 'package:shop_app/styles/themes.dart';
 
 import 'cubit/app_cubit.dart';
@@ -51,10 +52,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (BuildContext context) => AppCubit()),
+        BlocProvider(create: (BuildContext context) => NewsCubit()),
         BlocProvider(
-          create: (BuildContext context) => AppCubit(),
-        ),
-        BlocProvider(create: (BuildContext context) => NewsCubit())
+            create: (BuildContext context) => ShopCubit()..getHomeData()),
       ],
       child: BlocConsumer<AppCubit, NewsStates>(
         listener: (context, state) {},

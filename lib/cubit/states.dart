@@ -33,7 +33,7 @@ class NewsGetSportsErrorState extends NewsStates {
 }
 //  end sports States
 
-// search States
+// layout.search States
 class NewsGetSearchSuccessState extends NewsStates {}
 
 class NewsGetSearchErrorState extends NewsStates {
