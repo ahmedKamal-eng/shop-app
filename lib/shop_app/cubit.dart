@@ -1,13 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app/layout/categories/category_screen.dart';
-import 'package:shop_app/layout/favorite/favorite_screen.dart';
+import 'package:shop_app/categories/category_screen.dart';
+import 'package:shop_app/favorite/favorite_screen.dart';
 import 'package:shop_app/models/user/shop_app/home_model.dart';
 import 'package:shop_app/network/remote/dio_helper.dart';
 import 'package:shop_app/network/remote/end_points.dart';
-import 'package:shop_app/layout/products/products_screen.dart';
-import 'package:shop_app/layout/settings/settings_screen.dart';
+import 'package:shop_app/products/products_screen.dart';
+import 'package:shop_app/settings/settings_screen.dart';
 import 'package:shop_app/shop_app/states.dart';
 
 import '../constant.dart';

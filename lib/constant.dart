@@ -1,5 +1,5 @@
 import 'component.dart';
-import 'layout/login/shop_login.dart';
+import 'login/shop_login.dart';
 import 'network/local/cache_helper.dart';
 
 void signOut(context) {

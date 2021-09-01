@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/component.dart';
 
-import 'package:shop_app/layout/login/shop_login.dart';
-import 'package:shop_app/layout/search/search_screen.dart';
+import 'package:shop_app/login/shop_login.dart';
+import 'package:shop_app/search/search_screen.dart';
 import 'package:shop_app/shop_app/states.dart';
 
 import '../network/local/cache_helper.dart';

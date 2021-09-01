@@ -2,10 +2,10 @@ import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/component.dart';
-import 'package:shop_app/layout/login/cubit/cubit.dart';
-import 'package:shop_app/layout/login/states.dart';
+import 'package:shop_app/login/cubit/cubit.dart';
+import 'package:shop_app/login/states.dart';
 import 'package:shop_app/network/local/cache_helper.dart';
-import 'package:shop_app/layout/register/shop_register_screen.dart';
+import 'package:shop_app/register/shop_register_screen.dart';
 import 'file:///E:/flutter-app/Abdullah-Mansour/shop_app/lib/shop_app/shop_layout.dart';
 import 'package:toast/toast.dart';
 
@@ -61,7 +61,7 @@ class ShopLoginScreen extends StatelessWidget {
                               .copyWith(color: Colors.black),
                         ),
                         Text(
-                          'layout.login now to browse our hot offers',
+                          'login now to browse our hot offers',
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1
@@ -119,7 +119,7 @@ class ShopLoginScreen extends StatelessWidget {
                                       password: passwordController.text);
                                 }
                               },
-                              text: 'layout.login',
+                              text: 'login',
                               isUpperCase: true),
                           fallback: (context) =>
                               Center(child: CircularProgressIndicator()),

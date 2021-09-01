@@ -29,7 +29,7 @@
               />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.layout.categories.LAUNCHER"/>
+                <category android:name="android.intent.categories.LAUNCHER"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
