@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
 class DioHelper {
-  static Dio dio; //write static to use it in init which it a static method
+  static Dio dio; //write static to use it in init which it's a static method
 
   static init() {
     dio = Dio(
