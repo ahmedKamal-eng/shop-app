@@ -29,9 +29,13 @@ class ShopLoginScreen extends StatelessWidget {
                   context: context);
 
               CacheHelper.saveData(
-                      key: 'token', value: state.loginModel.data.token)
-                  .then((value) {
-                navigateAndFinish(context, ShopLayout());
+                key: 'token',
+                value: state.loginModel.data.token,
+              ).then((value) {
+                navigateAndFinish(
+                  context,
+                  ShopLayout(),
+                );
               });
             } else {
               showToast(

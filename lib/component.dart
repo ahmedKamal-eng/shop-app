@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_app/shop_app/cubit.dart';
+import 'package:shop_app/styles/colors.dart';
 import 'package:toast/toast.dart';
 
 Widget defaultFormField({
@@ -100,8 +102,9 @@ Widget defaultTextButton(
       child: Text(text.toUpperCase()),
     );
 
-void showToast({@required String message,context,Color color})=>   Toast.show(message, context,
-duration: Toast.LENGTH_LONG,
-gravity: Toast.BOTTOM,
-backgroundColor: color,
-textColor: Colors.white);
+void showToast({@required String message, context, Color color}) =>
+    Toast.show(message, context,
+        duration: Toast.LENGTH_LONG,
+        gravity: Toast.BOTTOM,
+        backgroundColor: color,
+        textColor: Colors.white);

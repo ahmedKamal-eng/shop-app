@@ -8,6 +8,7 @@ import 'package:shop_app/shop_app/cubit.dart';
 import 'package:shop_app/shop_app/shop_layout.dart';
 import 'package:shop_app/styles/themes.dart';
 
+import 'constant.dart';
 import 'cubit/app_cubit.dart';
 import 'cubit/cubit.dart';
 import 'cubit/obServer.dart';
@@ -26,7 +27,7 @@ void main() async {
 
   await CacheHelper.init();
   bool onBoarding = CacheHelper.getData(key: 'onBoarding');
-  String token = CacheHelper.getData(key: 'token');
+  token = CacheHelper.getData(key: 'token');
 
   if (onBoarding != null) {
     if (token != null)
@@ -55,9 +56,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (BuildContext context) => AppCubit()),
         BlocProvider(create: (BuildContext context) => NewsCubit()),
         BlocProvider(
-            create: (BuildContext context) => ShopCubit()
+            create: (context) => ShopCubit()
               ..getHomeData()
-              ..getCategories()),
+              ..getCategories()
+              ..getFavorites()),
       ],
       child: BlocConsumer<AppCubit, NewsStates>(
         listener: (context, state) {},
