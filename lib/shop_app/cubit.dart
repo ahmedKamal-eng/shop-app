@@ -9,6 +9,7 @@ import 'package:shop_app/models/user/shop_app/Category_model.dart';
 import 'package:shop_app/models/user/shop_app/change_favorite_model.dart';
 import 'package:shop_app/models/user/shop_app/favorite_model.dart';
 import 'package:shop_app/models/user/shop_app/home_model.dart';
+import 'package:shop_app/models/user/shop_app/login_model.dart';
 import 'package:shop_app/network/remote/dio_helper.dart';
 import 'package:shop_app/network/remote/end_points.dart';
 import 'package:shop_app/products/products_screen.dart';
@@ -126,6 +127,43 @@ class ShopCubit extends Cubit<ShopStates> {
     }).catchError((error) {
       print(error.toString());
       emit(ShopErrorGetFavoritesState());
+    });
+  }
+
+  ShopLoginModel shopLoginModel;
+
+  void getProfile() {
+    emit(ShopLoadingGetProfileState());
+
+    DioHelper.getData(url: PROFILE, token: token).then((value) {
+      shopLoginModel = ShopLoginModel.fromJson(value.data);
+      printFullText(value.data.toString());
+
+      emit(ShopSuccessGetProfileState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(ShopErrorGetProfileState());
+    });
+  }
+
+  void updateUserData({
+    @required String name,
+    @required String email,
+    @required String phone,
+  }) {
+    emit(ShopLoadingUpdateState());
+
+    DioHelper.putData(
+        url: UPDATE_PROFILE,
+        token: token,
+        data: {'name': name, 'email': email, 'phone': phone}).then((value) {
+      shopLoginModel = ShopLoginModel.fromJson(value.data);
+      printFullText(value.data.toString());
+
+      emit(ShopSuccessUpdateState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(ShopErrorUpdateState());
     });
   }
 }

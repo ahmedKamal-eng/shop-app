@@ -14,23 +14,27 @@ class FavoriteScreen extends StatelessWidget {
     return BlocConsumer<ShopCubit, ShopStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        return
-            // ConditionalBuilder(
-            // condition: state is! ShopLoadingGetFavoritesState,
-            // builder: (context) =>
-            ListView.separated(
-          itemBuilder: (context, index) => buildFavItem(
-              ShopCubit.get(context).favoritesModel.data.data[index], context),
-          separatorBuilder: (context, index) => myDivider(),
-          itemCount: ShopCubit.get(context).favoritesModel.data.data.length,
-        );
-        //   fallback: (context) => Center(child: CircularProgressIndicator()),
+        return ConditionalBuilder(
+            condition: state is! ShopLoadingGetFavoritesState,
+            builder: (context) => ListView.separated(
+                  itemBuilder: (context, index) => buildFavItem(
+                      ShopCubit.get(context)
+                          .favoritesModel
+                          .data
+                          .data[index]
+                          .product,
+                      context),
+                  separatorBuilder: (context, index) => myDivider(),
+                  itemCount:
+                      ShopCubit.get(context).favoritesModel.data.data.length,
+                ),
+            fallback: (context) => Center(child: CircularProgressIndicator()));
         // );
       },
     );
   }
 
-  Widget buildFavItem(FavoritesData model, context) => Padding(
+  Widget buildFavItem(Product model, context) => Padding(
         padding: const EdgeInsets.all(20.0),
         child: Container(
           height: 120.0,
@@ -40,11 +44,11 @@ class FavoriteScreen extends StatelessWidget {
                 alignment: AlignmentDirectional.bottomStart,
                 children: [
                   Image(
-                    image: NetworkImage(model.product.image),
+                    image: NetworkImage(model.image),
                     width: 120.0,
                     height: 120.0,
                   ),
-                  if (model.product.discount != 0)
+                  if (model.discount != 0)
                     Container(
                       color: Colors.red,
                       padding: EdgeInsets.symmetric(
@@ -68,7 +72,7 @@ class FavoriteScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      model.product.name,
+                      model.name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -80,7 +84,7 @@ class FavoriteScreen extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          model.product.price.toString(),
+                          model.price.toString(),
                           style: TextStyle(
                             fontSize: 12.0,
                             color: defaultColor,
@@ -89,9 +93,9 @@ class FavoriteScreen extends StatelessWidget {
                         SizedBox(
                           width: 5.0,
                         ),
-                        if (model.product.discount != 0)
+                        if (model.discount != 0)
                           Text(
-                            model.product.oldPrice.toString(),
+                            model.oldPrice.toString(),
                             style: TextStyle(
                               fontSize: 10.0,
                               color: Colors.grey,
@@ -101,15 +105,14 @@ class FavoriteScreen extends StatelessWidget {
                         Spacer(),
                         IconButton(
                           onPressed: () {
-                            ShopCubit.get(context)
-                                .changeFavorites(model.product.id);
+                            ShopCubit.get(context).changeFavorites(model.id);
                           },
                           icon: CircleAvatar(
                             radius: 15.0,
-                            backgroundColor: ShopCubit.get(context)
-                                    .favorites[model.product.id]
-                                ? defaultColor
-                                : Colors.grey,
+                            backgroundColor:
+                                ShopCubit.get(context).favorites[model.id]
+                                    ? defaultColor
+                                    : Colors.grey,
                             child: Icon(
                               Icons.favorite_border,
                               size: 14.0,

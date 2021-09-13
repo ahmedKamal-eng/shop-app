@@ -2,10 +2,14 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shop_app/login/cubit/cubit.dart';
 import 'package:shop_app/login/shop_login.dart';
 import 'package:shop_app/on_boarding/on_boarding_screen.dart';
+import 'package:shop_app/register/cubit/cubit.dart';
+import 'package:shop_app/search/cubit/cubit.dart';
 import 'package:shop_app/shop_app/cubit.dart';
 import 'package:shop_app/shop_app/shop_layout.dart';
+import 'package:shop_app/shop_app/states.dart';
 import 'package:shop_app/styles/themes.dart';
 
 import 'constant.dart';
@@ -52,27 +56,48 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (BuildContext context) => AppCubit()),
-        BlocProvider(create: (BuildContext context) => NewsCubit()),
-        BlocProvider(
-            create: (context) => ShopCubit()
+        providers: [
+          BlocProvider(
+            create: (BuildContext context) => ShopCubit()
               ..getHomeData()
               ..getCategories()
-              ..getFavorites()),
-      ],
-      child: BlocConsumer<AppCubit, NewsStates>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: lightTheme,
-            darkTheme: darkTheme,
-            themeMode: ThemeMode.light,
-            home: startWidget,
-          );
-        },
-      ),
-    );
+              ..getFavorites()
+              ..getProfile(),
+          ),
+          BlocProvider(
+            create: (context) => SearchCubit(),
+          )
+        ],
+        child: BlocConsumer<ShopCubit, ShopStates>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                theme: lightTheme,
+                darkTheme: darkTheme,
+                themeMode: ThemeMode.light,
+                home: startWidget);
+          },
+        ));
   }
 }
+
+// return BlocProvider(
+// create: (BuildContext context) => ShopCubit()
+// ..getHomeData()
+// ..getCategories()
+// ..getFavorites()
+// ..getProfile(),
+// child: BlocConsumer<ShopCubit, ShopStates>(
+// listener: (context, state) {},
+// builder: (context, state) {
+// return MaterialApp(
+// debugShowCheckedModeBanner: false,
+// theme: lightTheme,
+// darkTheme: darkTheme,
+// themeMode: ThemeMode.light,
+// home: startWidget,
+// );
+// },
+// ),
+// );
